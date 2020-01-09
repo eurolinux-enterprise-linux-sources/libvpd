@@ -1,0 +1,31 @@
+diff -up libvpd-2.1.2/Makefile.am.numbering libvpd-2.1.2/Makefile.am
+--- libvpd-2.1.2/Makefile.am.numbering	2011-01-31 08:16:06.186984320 +0100
++++ libvpd-2.1.2/Makefile.am	2011-01-31 08:16:32.951983869 +0100
+@@ -49,9 +49,9 @@ C_VERSION=@GENERIC_C_LIBRARY_VERSION@
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = libvpd-2.pc libvpd_cxx-2.pc
+ 
+-libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-info \
++libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-number \
+ 	$(CXX_VERSION) -release @GENERIC_RELEASE@
+-libvpd_la_LDFLAGS = -module -version-info \
++libvpd_la_LDFLAGS = -module -version-number \
+ 	$(C_VERSION) -release @GENERIC_RELEASE@
+ 
+ AM_CXXFLAGS = -DDEST_DIR='"${exec_prefix}"'
+diff -up libvpd-2.1.2/Makefile.in.numbering libvpd-2.1.2/Makefile.in
+--- libvpd-2.1.2/Makefile.in.numbering	2011-01-31 08:16:18.202985277 +0100
++++ libvpd-2.1.2/Makefile.in	2011-01-31 08:16:51.607984147 +0100
+@@ -267,10 +267,10 @@ CXX_VERSION = @GENERIC_CXX_LIBRARY_VERSI
+ C_VERSION = @GENERIC_C_LIBRARY_VERSION@
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = libvpd-2.pc libvpd_cxx-2.pc
+-libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-info \
++libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-number \
+ 	$(CXX_VERSION) -release @GENERIC_RELEASE@
+ 
+-libvpd_la_LDFLAGS = -module -version-info \
++libvpd_la_LDFLAGS = -module -version-number \
+ 	$(C_VERSION) -release @GENERIC_RELEASE@
+ 
+ AM_CXXFLAGS = -DDEST_DIR='"${exec_prefix}"'

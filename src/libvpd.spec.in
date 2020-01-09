@@ -3,7 +3,7 @@
 
 Name:		%{name}
 Version:	%{version}
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	VPD Database access library for lsvpd
 
 Group:		System Environment/Libraries
@@ -60,6 +60,11 @@ Contains header files for building with libvpd.
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+* Fri Dec 4 2009 Jim Keniston <jkenisto@us.ibm.com> 2.1.2-0
+- Fixed a pack/unpack mismatch that was introduced with N5/N6 support.
+For every Component, all 28 DataItems between sysFsNode and plantMfg
+were getting the wrong values.
+
 * Mon Mar 17 2008 Eric Munson <ebmunson@us.ibm.com> 2.0.1-1
 - Update for libvpd-2.0.1
 

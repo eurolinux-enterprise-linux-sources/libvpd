@@ -1,5 +1,5 @@
 Name:		libvpd
-Version:	2.1.1
+Version:	2.1.2
 Release:	3%{?dist}
 Summary:	VPD Database access library for lsvpd
 
@@ -8,6 +8,8 @@ License:	LGPLv2+
 URL:		http://linux-diag.sf.net/Lsvpd.html
 Source:		http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Patch1:		libvpd-2.1.2-numbering.patch
 
 BuildRequires:	sqlite-devel zlib-devel libstdc++-devel
 
@@ -24,6 +26,14 @@ Contains header files for building with libvpd.
 
 %prep
 %setup -q
+
+%patch1 -p1 -b .numbering
+
+# corrects persmissions of doc files (755 -> 644)
+chmod 0644 COPYING NEWS README TODO AUTHORS
+# corrects persmissions of tarball sources (755 -> 0644)
+chmod 0644 src/*.{c,cpp}
+chmod 0644 src/libvpd-2/*.{h,hpp}
 
 %build
 %configure --disable-static
@@ -57,6 +67,15 @@ Contains header files for building with libvpd.
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+* Thu Jan 31 2011 Jiri Skala <jskala@redhat.com> 2.1.2-3
+- Resolves: #669366 - lsvpd-1.6.10-2.el6.ppc64 requires libvpd_cxx-2.1.so.1
+
+* Thu Jan 10 2011 Jiri Skala <jskala@redhat.com> 2.1.2-2
+- Resolves: #632738 - corrects permissions of source and doc files (tarball)
+
+* Thu Jan 06 2011 Jiri Skala <jskala@redhat.com> 2.1.2-1
+- Resolves: #632738 - [6.1 FEAT] Package Update: libvpd
+
 * Thu Feb 18 2010 Roman Rakus <rrakus@redhat.com> 2.1.1-3
 - Get a rid of define {name,version}
 

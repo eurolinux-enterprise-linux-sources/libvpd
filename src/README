@@ -11,7 +11,9 @@ Binary Dependencies
 
 Compilation Dependencies
 	Sqlite3 development package
+	  (Src: http://www.sqlite.org/)
 	ZLIB development package
+  	  (Src: http://www.zlib.net/zlib-1.2.3.tar.gz)
 
 For users of older RHEL and SLES versions:
 slqite is not available in the default repositories for some of the older

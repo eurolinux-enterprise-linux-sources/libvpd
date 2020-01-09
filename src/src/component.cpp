@@ -439,18 +439,6 @@ namespace lsvpd
 		{
 			goto lderr;
 		}
-		n5 = DataItem( next );
-		next += n5.getPackedLength( );
-		if( next > packed + size )
-		{
-			goto lderr;
-		}
-		n6 = DataItem( next );
-		next += n6.getPackedLength( );
-		if( next > packed + size )
-		{
-			goto lderr;
-		}
 		sysFsNode = DataItem( next );
 		next += sysFsNode.getPackedLength( );
 		if( next > packed + size )
@@ -611,6 +599,18 @@ namespace lsvpd
 		}
 		scsiDetail = DataItem( next );
 		next += scsiDetail.getPackedLength( );
+		if( next > packed + size )
+		{
+			goto lderr;
+		}
+		n5 = DataItem( next );
+		next += n5.getPackedLength( );
+		if( next > packed + size )
+		{
+			goto lderr;
+		}
+		n6 = DataItem( next );
+		next += n6.getPackedLength( );
 		if( next > packed + size )
 		{
 			goto lderr;
