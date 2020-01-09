@@ -922,6 +922,14 @@ lderr:
 		d->ac = ac;
 		d->humanName = humanName;
 		d->setValue( val, lvl, __FILE__, __LINE__ );
+#if 0
+
+		/*
+		 * There can be multiple records with the 'CL' key.
+		 * e.g., system firmware has different values for indicating
+		 * the levels of Phyp, FSP etc.
+		 * So do not check if we already have the record.
+		 */
 
 		for( i = mDeviceSpecific.begin( ), end = mDeviceSpecific.end( );
 			i != end; ++i )
@@ -929,10 +937,39 @@ lderr:
 			if( (*i)->ac == ac )
 				return; //Failed to add - already present
 		}
+#endif
 
 		mDeviceSpecific.push_back( d );
 	}
 
+	void Component::updateDeviceSpecific( const string& ac,
+		const string& humanName, const string& val, int lvl = 0 )
+	{
+		vector<DataItem*>::iterator i, end;
+
+		for ( i = mDeviceSpecific.begin( ), end = mDeviceSpecific.end( );
+			i != end; ++i )
+		{
+			if ( (*i)->ac == ac ) {
+				(*i)->setValue(val, lvl, __FILE__, __LINE__ );
+				return;
+			}
+		}
+
+		/* We didn't find the entry, so add it */
+		addDeviceSpecific(ac, humanName, val, lvl);
+	}
+
+	const string* Component::getMicroCodeLevel( )
+	{
+		const DataItem *d = getDeviceSpecific("ML");
+
+		if ( d != NULL )
+			return &((*d).getValue());
+		else
+			return NULL;
+	}
+		
 	void Component::addUserData( const string& ac, const string& humanName,
 		const string& val, int prefLvl = 1, bool clobber = false )
 	{

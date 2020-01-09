@@ -290,6 +290,22 @@ namespace lsvpd
 									const string& val, int prefLvl );
 
 			/**
+			 * Like addDeviceSpecific, however, if it finds an existing
+			 * entry, we modify the existing one with the new Value.
+			 * @brief
+			 *   Adds an entry in to the Device Specifc vector.
+			 * @param ac
+			 *   Holds the acronymn (in vpd-ese) for the new entry
+			 * @param humanName
+			 *   A more descriptive label for the new entry
+			 * @param val
+			 *   The value of the new entry
+			 * @param prefLvl
+			 *   The preference level to use for the new entry
+			 */
+			void updateDeviceSpecific( const string& ac, const string& humanName,
+									const string& val, int prefLvl );
+			/**
 			 * This creates a new DataItem, filling it with the provided data
 			 * and attempts to add it to the UserData vector.  Because the
 			 * UserData vector has to have unique acronymns the caller needs
@@ -576,6 +592,9 @@ namespace lsvpd
 			{ return n5.getValue(); }
 			inline const string& getn6( ) const
 			{ return n6.getValue(); }
+			inline const string& getMachineSerial() const
+			{ return plantMfg.getValue(); }
+			const string* getMicroCodeLevel( );
 
 			// The Get Acronymn methods
 			inline const string& getDescriptionAC( ) const
@@ -626,6 +645,8 @@ namespace lsvpd
 			{ return n5.getAC( ); }
 			inline const string& getn6AC( ) const
 			{ return n6.getAC( ); }
+			inline const string& getMachineSerialAC() const
+			{ return plantMfg.getAC(); }
 
 			// The get human name methods
 			inline const string& getDescriptionHN( ) const
@@ -676,6 +697,8 @@ namespace lsvpd
 			{ return n5.getHumanName( ); }
 			inline const string& getn6HN( ) const
 			{ return n6.getHumanName( ); }
+			inline const string& getMachineSerialHN() const
+			{ return plantMfg.getHumanName(); }
 
 			inline const vector<Component*>& getLeaves( ) const { return mLeaves; }
 			inline void addLeaf( Component* in ) { mLeaves.push_back( in ); }

@@ -62,6 +62,7 @@ namespace lsvpd {
 
 			static bool contains( const vector<DataItem*>& vec,
 				const string& val );
+			static int execCmd( const char *cmd, string& output );
 	};
 }
 

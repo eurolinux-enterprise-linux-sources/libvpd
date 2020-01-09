@@ -18,6 +18,8 @@ lib_h_files = src/libvpd-2/vpdretriever.h \
 		src/libvpd-2/common.h \
 		src/libvpd-2/vpddbenv.h
 
+EXTRA_DIST = bootstrap.sh 90-vpdupdate.rules run.vpdupdate
+
 lib_LTLIBRARIES = libvpd_cxx.la libvpd.la
 library_includedir=$(includedir)/libvpd-2/
 library_include_HEADERS = $(lib_hpp_files) $(lib_h_files)
@@ -49,9 +51,9 @@ C_VERSION=@GENERIC_C_LIBRARY_VERSION@
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libvpd-2.pc libvpd_cxx-2.pc
 
-libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-info \
+libvpd_cxx_la_LDFLAGS = -module -lstdc++ -version-number \
 	$(CXX_VERSION) -release @GENERIC_RELEASE@
-libvpd_la_LDFLAGS = -module -version-info \
+libvpd_la_LDFLAGS = -module -version-number \
 	$(C_VERSION) -release @GENERIC_RELEASE@
 
 AM_CXXFLAGS = -DDEST_DIR='"${exec_prefix}"'
@@ -60,3 +62,11 @@ AM_CFLAGS = -DDEST_DIR='"${exec_prefix}"'
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
+
+install-exec-hook:
+	mkdir -p $(DESTDIR)/${sysconfdir}/udev/rules.d/
+	mkdir -p $(DESTDIR)/${localstatedir}/lib/lsvpd/
+	install -D --mode=644 run.vpdupdate \
+		${DESTDIR}/${localstatedir}/lib/lsvpd/run.vpdupdate
+	install -D --mode=644 90-vpdupdate.rules \
+                ${DESTDIR}/${sysconfdir}/udev/rules.d/90-vpdupdate.rules

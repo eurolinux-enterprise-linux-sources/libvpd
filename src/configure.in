@@ -1,5 +1,5 @@
 #base
-AC_INIT([libvpd],[2.1.2],[masonmik@us.ibm.com,bpeters@us.ibm.com])
+AC_INIT([libvpd],[2.2.3],[hegdevasant@in.ibm.com,suzuki@in.ibm.com])
 AC_CONFIG_HEADER(src/libvpd-2/config.h)
 AM_INIT_AUTOMAKE
 AC_SUBST(DATE, [`date`])
@@ -9,8 +9,8 @@ GENERIC_LIBRARY_NAME=libvpd
 
 #Release version
 GENERIC_MAJOR_VERSION=2
-GENERIC_MINOR_VERSION=1
-GENERIC_MICRO_VERSION=2
+GENERIC_MINOR_VERSION=2
+GENERIC_MICRO_VERSION=3
 
 GENERIC_API_VERSION=$GENERIC_MAJOR_VERSION
 AC_SUBST(GENERIC_API_VERSION)
@@ -51,10 +51,14 @@ AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/param.h syslog.h unistd.h ctype.h sqlite3.h])
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/param.h syslog.h unistd.h ctype.h])
+AC_CHECK_HEADERS([sqlite3.h],,[AC_MSG_ERROR([sqlite header files are required for building libvpd])])
+
 
 #libraries
-AC_CHECK_LIB(sqlite3, sqlite3_libversion_number)
+AC_CHECK_LIB(sqlite3, sqlite3_libversion_number, [], [ 
+			echo "sqlite3 library is required for lsvpd"
+			exit 1 ])
 AC_FUNC_CLOSEDIR_VOID
 AC_PROG_GCC_TRADITIONAL
 AC_FUNC_LSTAT

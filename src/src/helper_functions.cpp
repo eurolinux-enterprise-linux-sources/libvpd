@@ -24,9 +24,13 @@
 #include <libvpd-2/helper_functions.hpp>
 #include <cstdio>
 #include <fcntl.h>
+#include <unistd.h>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
+
+
+#define BUF_SIZE 512
 
 using namespace std;
 using namespace lsvpd;
@@ -152,7 +156,7 @@ string HelperFunctions::parseString(const string& line, int str_pos, string& out
 	 */
 	string HelperFunctions::getSymLinkTarget(const string& symLinkPath)
 	{
-		char linkTarget[512], *buf;
+		char linkTarget[BUF_SIZE], *buf;
 		
 		buf = strdup(symLinkPath.c_str());
 		int len = readlink(buf, linkTarget, sizeof(
@@ -362,14 +366,14 @@ string HelperFunctions::parseString(const string& line, int str_pos, string& out
 string HelperFunctions::readMatchFromFile(const string& file,
 											const string& str)
 {
-	char buf[512];
+	char buf[BUF_SIZE];
 	string line;
 	
 	if (file_exists(file)) {
 		ifstream fin(file.c_str());
 		
 		while(!fin.eof()) {
-			fin.getline(buf,512);
+			fin.getline(buf,BUF_SIZE - 1);
 			line = string(buf);
 			int loc = line.find(str);
 			if (loc == 0) {
@@ -407,4 +411,19 @@ string HelperFunctions::readMatchFromFile(const string& file,
 		}
 
 		return false;
+	}
+
+	int HelperFunctions::execCmd( const char *cmd, string& output )
+	{
+		char buf[BUF_SIZE];
+		FILE *fp = popen(cmd, "r");
+
+		if (fp == NULL)
+			return 1;
+
+		while ( !feof(fp) )
+			if (fgets(buf, BUF_SIZE - 1, fp) != NULL)
+				output += buf;
+		pclose(fp);
+		return 0;
 	}

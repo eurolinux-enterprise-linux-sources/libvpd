@@ -3,11 +3,12 @@
 
 Name:		%{name}
 Version:	%{version}
-Release:	2%{?dist}
+Release:	0%{?dist}
 Summary:	VPD Database access library for lsvpd
 
 Group:		System Environment/Libraries
 License:	LGPLv2+
+Vendor:         IBM Corp.
 URL:		http://linux-diag.sf.net/Lsvpd.html
 Source:		http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -45,10 +46,12 @@ Contains header files for building with libvpd.
 
 %files 
 %defattr(-,root,root,-)
-%doc COPYING NEWS README TODO AUTHORS
+%doc COPYING NEWS README AUTHORS
 %exclude %{_libdir}/*.la
 %{_libdir}/libvpd_cxx-@GENERIC_RELEASE@.so.*
 %{_libdir}/libvpd-@GENERIC_RELEASE@.so.*
+%{_sysconfdir}/udev/rules.d/90-vpdupdate.rules
+%{_var}/lib/lsvpd/run.vpdupdate
 
 %files devel
 %defattr(-,root,root,-)
@@ -60,6 +63,22 @@ Contains header files for building with libvpd.
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+
+* Wed Mar 13 2014 Suzuki K Poulose <suzuki@in.ibm.com> 2.2.3
+- Relese version 2.2.3
+
+* Tue Nov 5 2013 Suzuki K Poulose <suzuki@in.ibm.com> 2.2.2-0
+- Release version 2.2.2
+
+* Thu Oct 31 2013 Phani Yadav <phayadav@linux.vnet.ibm.com>
+- Automation of vpdupdate
+
+* Wed Feb 20 2013 Harsh P Bora <harsh@linux.vnet.ibm.com> 2.2.1-1
+- Added Vendor tag in RPM package.
+
+* Fri Jan 18 2013 Harsh P Bora <harsh@linux.vnet.ibm.com> 2.2.1-0
+- Fixed a possible segfault when fetching a corrupt vpd database
+
 * Fri Dec 4 2009 Jim Keniston <jkenisto@us.ibm.com> 2.1.2-0
 - Fixed a pack/unpack mismatch that was introduced with N5/N6 support.
 For every Component, all 28 DataItems between sysFsNode and plantMfg

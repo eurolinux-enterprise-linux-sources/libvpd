@@ -1,6 +1,6 @@
 Name:		libvpd
-Version:	2.1.2
-Release:	3%{?dist}
+Version:	2.2.3
+Release:	1%{?dist}
 Summary:	VPD Database access library for lsvpd
 
 Group:		System Environment/Libraries
@@ -9,9 +9,8 @@ URL:		http://linux-diag.sf.net/Lsvpd.html
 Source:		http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Patch1:		libvpd-2.1.2-numbering.patch
 
-BuildRequires:	sqlite-devel zlib-devel libstdc++-devel
+BuildRequires:	sqlite-devel zlib-devel libstdc++-devel libtool autoconf
 
 %description
 The libvpd package contains the classes that are used to access a vpd database
@@ -27,13 +26,7 @@ Contains header files for building with libvpd.
 %prep
 %setup -q
 
-%patch1 -p1 -b .numbering
-
-# corrects persmissions of doc files (755 -> 644)
-chmod 0644 COPYING NEWS README TODO AUTHORS
-# corrects persmissions of tarball sources (755 -> 0644)
-chmod 0644 src/*.{c,cpp}
-chmod 0644 src/libvpd-2/*.{h,hpp}
+./bootstrap.sh
 
 %build
 %configure --disable-static
@@ -52,10 +45,13 @@ chmod 0644 src/libvpd-2/*.{h,hpp}
 
 %files 
 %defattr(-,root,root,-)
-%doc COPYING NEWS README TODO AUTHORS
+%doc COPYING NEWS README AUTHORS
 %exclude %{_libdir}/*.la
-%{_libdir}/libvpd_cxx-2.1.so.*
-%{_libdir}/libvpd-2.1.so.*
+%{_libdir}/libvpd_cxx-2.2.so.*
+%{_libdir}/libvpd-2.2.so.*
+%dir %{_sharedstatedir}/lsvpd
+%{_sharedstatedir}/lsvpd/run.vpdupdate
+%{_sysconfdir}/udev/rules.d/90-vpdupdate.rules
 
 %files devel
 %defattr(-,root,root,-)
@@ -67,6 +63,10 @@ chmod 0644 src/libvpd-2/*.{h,hpp}
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+* Thu Apr 17 2014 Jakub Čajka <jcajka@redhat.com> 2.2.3-1
+- Update to version 2.2.3
+- Resolves: #739122 - [6.6 FEAT] libvpd package update - ppc64 
+
 * Thu Jan 31 2011 Jiri Skala <jskala@redhat.com> 2.1.2-3
 - Resolves: #669366 - lsvpd-1.6.10-2.el6.ppc64 requires libvpd_cxx-2.1.so.1
 
