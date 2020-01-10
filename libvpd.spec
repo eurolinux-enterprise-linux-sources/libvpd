@@ -3,7 +3,7 @@
 
 Name:		%{name}
 Version:	%{version}
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	VPD Database access library for lsvpd
 
 Group:		System Environment/Libraries
@@ -72,6 +72,9 @@ Contains header files for building with libvpd.
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 2.2.1-3
+- Mass rebuild 2013-12-27
+
 * Wed Nov 06 2013 Filip Kocina <fkocina@redhat.com> - 2.2.2
 - Resolves: #1026771 - applied patch to update vpd database automatically
 
