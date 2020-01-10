@@ -1,0 +1,11 @@
+diff -up libvpd-2.1.3/src/helper_functions.cpp.gcc47 libvpd-2.1.3/src/helper_functions.cpp
+--- libvpd-2.1.3/src/helper_functions.cpp.gcc47	2012-01-18 10:50:11.367639050 +0100
++++ libvpd-2.1.3/src/helper_functions.cpp	2012-01-18 10:52:22.453423299 +0100
+@@ -24,6 +24,7 @@
+ #include <libvpd-2/helper_functions.hpp>
+ #include <cstdio>
+ #include <fcntl.h>
++#include <unistd.h>
+ #include <cstdlib>
+ #include <cstring>
+ #include <fstream>
